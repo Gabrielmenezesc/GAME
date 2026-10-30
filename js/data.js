@@ -1,0 +1,23 @@
+const banks={
+  comida:['Qual pizza ${other} pediria agora?','Qual sobremesa ${other} escolheria?','${other} prefere cozinhar ou pedir comida?','Qual lanche salva uma noite de filme?'],
+  musica:['Qual música faz ${other} cantar sem perceber?','Que música seria a trilha de uma viagem juntos?','${other} escolheria festa ou playlist calma?','Qual estilo musical ${other} coloca primeiro?'],
+  viagem:['Para onde ${other} viajaria amanhã?','${other} prefere praia, montanha ou cidade?','Qual aventura vocês fariam juntos?','Qual lugar merece uma foto dos dois?'],
+  rotina:['Quem demora mais para ficar pronto?','Qual é a primeira coisa que ${other} faz ao acordar?','O que melhora instantaneamente o dia de ${other}?','Qual hábito engraçado ${other} tem?'],
+  memoria:['Qual foi o primeiro filme que vocês viram juntos?','Que momento merece replay para sempre?','Qual passeio vocês precisam repetir?','O que sempre faz vocês rirem juntos?'],
+  sonhos:['Qual sonho ${other} quer realizar primeiro?','Qual seria a casa dos sonhos de ${other}?','Que talento novo ${other} gostaria de aprender?','Qual próximo grande plano do casal?'],
+  risada:['Qual apelido mais engraçado combina com ${other}?','Se ${other} fosse um emoji, qual seria?','Em um filme, qual papel ${other} faria?','Que superpoder inútil ${other} teria?']
+};
+const options={
+  comida:['Pizza','Hambúrguer','Sushi','Massas'],musica:['Pop','Sertanejo','Pagode','Rock'],viagem:['Praia','Montanha','Cidade','Interior'],rotina:['Café','Celular','Banho','Soneca'],memoria:['Uma viagem','Um filme','Um jantar','Uma conversa'],sonhos:['Viajar','Casa nova','Projeto juntos','Aventura'],risada:['😂','😎','🤪','🥹']
+};
+const challengeBases=['Façam uma pose de vitória em dupla','Imite o jeito do outro comemorar uma vitória','Crie uma propaganda absurda para o outro','Tentem não rir olhando um para o outro','Inventem o nome de uma equipe de corrida do casal','Faça uma dança de pit stop','Desenhe um carro usando apenas uma mão','Fale uma frase romântica como narrador esportivo','Crie um grito de torcida para seu piloto favorito','Façam uma foto com a expressão mais dramática possível','Conte uma lembrança boa','Imite um motor usando apenas a voz','Crie uma legenda cinematográfica para a corrida','Façam uma careta digna de um troféu','Inventem um aperto de mão da equipe'];
+const challengeTwists=['em 5 segundos','em 10 segundos','em 15 segundos','sem usar a letra A','com voz de robô','como se a torcida estivesse ouvindo','usando apenas gestos','em câmera lenta','com muita seriedade','como uma entrevista pós-corrida','como se tivessem vencido o campeonato','sem repetir nenhuma palavra'];
+// 180 desafios seguros, gerados de combinações diferentes para manter cada corrida leve e variada.
+export const challenges=challengeBases.flatMap(base=>challengeTwists.map(twist=>`${base} ${twist}.`));
+export const radioLines=['Tudo sob controle. Mantenha o foco.','A pista está livre. Pode acelerar.','Temos uma pergunta chegando.','Essa resposta pode mudar a corrida.','Excelente trabalho no setor!','O outro piloto está se aproximando.','Match detectado. Energia extra disponível.','A torcida está com vocês!','Pit wall para o piloto: confie no seu instinto.'];
+const questionFlavors=['hoje','nesta corrida','em uma noite perfeita','sem pensar duas vezes','depois de um dia cansativo','para comemorar uma vitória','no próximo fim de semana','em uma viagem surpresa','quando quer se divertir','num domingo tranquilo','num encontro especial','num desafio divertido'];
+// Cada uma das 28 perguntas-base recebe 12 contextos: 336 perguntas leves e editáveis localmente.
+const fullBank=Object.entries(banks).flatMap(([category,items])=>items.flatMap(text=>questionFlavors.map(flavor=>({category,text:`${text} ${flavor}?`}))));
+export function questionFor(p1,p2,mode){let pool=fullBank;if(mode==='music')pool=fullBank.filter(q=>q.category==='musica');if(mode==='laugh')pool=fullBank.filter(q=>q.category==='risada');if(mode==='mind')pool=fullBank.filter(q=>['rotina','sonhos','memoria'].includes(q.category));const pick=pool[Math.floor(Math.random()*pool.length)],other=Math.random()>.5?p1:p2;return {text:pick.text.replaceAll('${other}',other).replace(/\?\?$/,'?'),category:pick.category,answers:options[pick.category]||options.memoria};}
+export function seededTrack(){const base=['START','QUESTION','MATCH','TURBO','CHALLENGE','MEMORY','PIT','QUESTION','SURPRISE','CHECKPOINT','MEME','QUESTION','PANE','MUSIC','CHALLENGE','TURBO','QUESTION','MEMORY','PIT','MATCH','CHECKPOINT','SURPRISE','QUESTION','CHALLENGE','MEME','TURBO','QUESTION','PANE','CHECKPOINT','FINISH'];return base.map((x,i)=>({type:i===0||i===base.length-1?x:(Math.random()<.25?'QUESTION':x)}));}
+
