@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#070b15" />
+  <title>Anny & Biel — Grand Prix do Casal</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main id="app">
+    <canvas id="raceCanvas" aria-label="Pista 3D do Grand Prix do Casal"></canvas>
+    <div class="vignette"></div>
+    <section id="splash" class="screen active">
+      <div class="grid-glow"></div>
+      <p class="eyebrow">AUTÓDROMO JOSÉ CARLOS PACE · SÃO PAULO</p>
+      <h1>ANNY <span>&</span> BIEL</h1>
+      <h2>GRAND PRIX <em>DO CASAL</em></h2>
+      <p class="tagline">Uma corrida. Duas histórias. Mil desafios.</p>
+      <div class="hero-actions"><button id="startBtn" class="primary">🏁 COMEÇAR</button><button id="howBtn" class="secondary">🎮 COMO JOGAR</button></div>
+      <p class="audio-note">Clique em começar para ativar os sons do circuito.</p>
+    </section>
+
+    <section id="setup" class="screen panel-screen">
+      <button class="back" data-back>← Voltar</button>
+      <div class="setup-card">
+        <p class="eyebrow">CONFIGURAÇÃO DA CORRIDA</p><h2>Grid de largada</h2>
+        <div class="pilots">
+          <label>PILOTO 1 <input id="name1" maxlength="16" value="ANNY" /></label>
+          <label>PILOTO 2 <input id="name2" maxlength="16" value="BIEL" /></label>
+        </div>
+        <div class="choices"><label>Voltas <select id="laps"><option value="1">1 volta</option><option value="2">2 voltas</option><option value="3">3 voltas</option></select></label><label>Modo <select id="mode"><option value="classic">Corrida rápida</option><option value="laugh">Modo risada</option><option value="mind">Quem conhece melhor?</option><option value="music">Music Pit</option></select></label></div>
+        <div class="cars"><button class="car-choice selected" data-car="0">01<br><i></i>RUBI</button><button class="car-choice" data-car="1">02<br><i></i>AZUL</button><button class="car-choice" data-car="2">03<br><i></i>OURO</button><button class="car-choice" data-car="3">04<br><i></i>VIOLETA</button></div>
+        <div class="vault-row"><input id="rewardInput" maxlength="55" placeholder="Adicionar prêmio da noite (ex.: escolher o filme)"/><button id="addReward">＋</button></div><div id="rewardList" class="reward-list"></div>
+        <button id="raceBtn" class="primary wide">ACENDER AS LUZES</button>
+      </div>
+    </section>
+
+    <section id="how" class="screen panel-screen"><button class="back" data-back>← Voltar</button><div class="setup-card how"><p class="eyebrow">COMO JOGAR</p><h2>Amor também é competição.</h2><p>Em cada turno, lance o dado e percorra a pista de Interlagos. Casas especiais trazem perguntas, desafios, turbos e pit stops.</p><p>Nas perguntas, cada pessoa responde em segredo: passe o dispositivo, escolha, entregue ao outro e só então revele. Match dá pontos extras.</p><p>Controles: <b>🎲 lançar dado</b>, responder as casas especiais e vencer na pista ou nos pontos na chegada.</p><button class="primary" data-back>ENTENDI</button></div></section>
+
+    <section id="hud" class="hidden">
+      <header><div class="brand">A<span>&</span>B <small>GRAND PRIX</small></div><div id="lapInfo">VOLTA 1/1 · CASA 1/30</div><button id="soundBtn" aria-label="Alternar som">🔊</button></header>
+      <div class="scoreboard"><div class="driver red"><b id="hudName1">ANNY</b><span id="score1">0 PTS</span><small id="pos1">P1 · 1</small></div><div class="vs">VS</div><div class="driver blue"><b id="hudName2">BIEL</b><span id="score2">0 PTS</span><small id="pos2">P2 · 1</small></div></div>
+      <div id="radio" class="radio">📻 DIREÇÃO DE PROVA: As luzes vão apagar.</div>
+      <div class="turn-panel"><span id="turnLabel">VEZ DE ANNY</span><button id="diceBtn" class="dice-button">🎲 <b>LANÇAR DADO</b></button><span id="diceResult"></span></div>
+      <button id="cameraBtn" class="camera-btn">◉ CÂMERA</button>
+    </section>
+    <div id="modal" class="modal hidden" role="dialog" aria-modal="true"><div id="modalCard" class="modal-card"></div></div>
+    <section id="finish" class="screen panel-screen"><div class="podium"><p class="eyebrow">BANDEIRA QUADRICULADA</p><h2 id="winnerTitle">GRANDE CAMPEÃO</h2><div class="trophy">🏆</div><h3 id="winnerName"></h3><p id="finishText"></p><div id="finalStats" class="final-stats"></div><button id="photoBtn" class="secondary">📸 GERAR CARTÃO</button><button id="againBtn" class="primary">NOVA CORRIDA</button></div></section>
+    <canvas id="photoCanvas" class="hidden" width="1200" height="630"></canvas>
+  </main>
+  <script type="module" src="js/main.js"></script>
+</body>
+</html>
+
